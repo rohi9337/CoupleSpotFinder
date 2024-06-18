@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ place.name }}</title>
+</head>
+<body>
+    <h1>{{ place.name }}</h1>
+    <p>{{ place.description }}</p>
+    <p>
+        Address: 
+        <a href="https://www.google.com/maps/search/?api=1&query={{ place.address|urlencode }}" target="_blank">
+            {{ place.address }}
+        </a>
+    </p>
+    <p>Rating: {{ place.rating }}</p>
+</body>
+</html>

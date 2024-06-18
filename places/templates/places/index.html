@@ -1,0 +1,17 @@
+<!-- places/templates/places/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Best Couple Places</title>
+</head>
+<body>
+    <h1>Best Couple Places in Our City</h1>
+    <ul>
+        {% for place in places %}
+        <li>
+            <a href="{% url 'place_detail' place.id %}">{{ place.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
