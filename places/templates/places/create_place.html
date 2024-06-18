@@ -1,0 +1,95 @@
+<!-- places/templates/places/create_place.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Place</title>
+    <!-- Bootstrap CSS (adjust path as needed) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-control {
+            height: calc(1.5em + 1.2rem + 2px);
+            padding: 0.6rem 1rem;
+            font-size: 1rem;
+        }
+        .form-control-file {
+            height: calc(1.5em + 1.2rem + 2px);
+            padding: 0.6rem 1rem;
+        }
+        .btn-primary {
+            background-color: #ff6f61;
+            border-color: #ff6f61;
+        }
+        .btn-primary:hover {
+            background-color: #e65c4d;
+            border-color: #e65c4d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create a New Place</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Name:</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="id_description">Description:</label>
+                {{ form.description }}
+            </div>
+            <div class="form-group">
+                <label for="id_address">Address:</label>
+                {{ form.address }}
+            </div>
+            <div class="form-group">
+                <label for="id_latitude">Latitude:</label>
+                {{ form.latitude }}
+            </div>
+            <div class="form-group">
+                <label for="id_longitude">Longitude:</label>
+                {{ form.longitude }}
+            </div>
+            <div class="form-group">
+                <label for="id_rating">Rating:</label>
+                {{ form.rating }}
+            </div>
+            <div class="form-group">
+                <label for="id_image">Image:</label>
+                {{ form.image }}
+            </div>
+            <button type="submit" class="btn btn-primary">Create Place</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (optional, for some functionalities) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,17 +1,107 @@
 <!-- places/templates/places/index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Best Couple Places</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #ff6f61;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .places-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .place-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.2s;
+        }
+        .place-card:hover {
+            transform: scale(1.05);
+        }
+        .place-image {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .place-details {
+            padding: 1rem;
+        }
+        .place-name {
+            color: #333;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .place-description {
+            color: #666;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+        .place-address {
+            color: #999;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        .place-rating {
+            color: #ff6f61;
+            font-size: 1rem;
+        }
+        .details-link {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Best Couple Places in Our City</h1>
-    <ul>
+    <header>
+        <h1>Best Couple Places in Our City</h1>
+    </header>
+    <div class="places-container">
         {% for place in places %}
-        <li>
-            <a href="{% url 'place_detail' place.id %}">{{ place.name }}</a>
-        </li>
+        <div class="place-card">
+            {% if place.image %}
+                <a href="{% url 'place_detail' place.id %}">
+                    <img src="{{ place.image.url }}" alt="{{ place.name }}" class="place-image">
+                </a>
+            {% else %}
+                <a href="{% url 'place_detail' place.id %}">
+                    <img src="https://via.placeholder.com/300x200" alt="No Image" class="place-image">
+                </a>
+            {% endif %}
+
+            <div class="place-details">
+                <h2 class="place-name"><a href="{% url 'place_detail' place.id %}" class="details-link">{{ place.name }}</a></h2>
+                <p class="place-description">{{ place.description|truncatewords:20 }}</p>
+                <p class="place-address">{{ place.address }}</p>
+                <p class="place-rating">Rating: {{ place.rating }}/5</p>
+                <a href="{% url 'place_detail' place.id %}" class="details-link">View Details</a>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+    <div class="create-place-link">
+        <a href="{% url 'create_place' %}">Create a New Place</a>
+    </div>
 </body>
 </html>

@@ -8,6 +8,8 @@ class Place(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     rating = models.FloatField()
+    image = models.ImageField(upload_to='images/', blank= True,  null= True)
+    # pic = charfield
 
     def __str__(self):
         return self.name
