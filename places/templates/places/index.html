@@ -1,4 +1,3 @@
-<!-- places/templates/places/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,49 @@
             background-color: #ff6f61;
             color: white;
             padding: 1rem;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+        .header-right a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .header-right a:hover {
+            background-color: #e65c4d;
+        }
+        .gear-icon {
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 1rem;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
         }
         h1 {
             margin: 0;
@@ -71,11 +112,53 @@
             color: #ff6f61;
             text-decoration: none;
         }
+        .create-place-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .create-place-link a {
+            background-color: #ff6f61;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .create-place-link a:hover {
+            background-color: #e65c4d;
+        }
     </style>
+    <script>
+        function toggleDropdown() {
+            document.getElementById("dropdown").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.gear-icon')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
         <h1>Best Couple Places in Our City</h1>
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                <span class="gear-icon" onclick="toggleDropdown()">⚙️</span>
+                <div id="dropdown" class="dropdown-content">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Sign Up</a>
+            {% endif %}
+        </div>
     </header>
     <div class="places-container">
         {% for place in places %}
