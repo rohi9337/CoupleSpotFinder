@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import render, redirect
 from .models import Place
 from .forms import PlaceForm
@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse, reverse_lazy
 from django.views import View
+from django.http import HttpResponseNotFound
 
 
 class CustomLoginView(View):
@@ -30,6 +31,7 @@ class CustomLoginView(View):
         return render(request, self.template_name, {'form': form})
 
 
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('index')
@@ -65,6 +67,9 @@ def create_place(request):
     return render(request, 'places/create_place.html', {'form': form})
 
 
+@login_required
 def place_detail(request, place_id):
-    place = Place.objects.get(id=place_id)
+    place = Place.objects.filter(id=place_id).first()
+    if not place:
+        return HttpResponseNotFound("Place not found.")
     return render(request, 'places/detail.html', {'place': place})
