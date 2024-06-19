@@ -48,6 +48,7 @@
             font-size: 1rem;
             cursor: pointer;
             border-radius: 4px;
+            margin-right: 1rem; /* Added margin-right for spacing */
         }
         .btn-primary:hover {
             background-color: #e65c4d;
@@ -69,7 +70,10 @@
                 <label for="id_password">Password:</label>
                 <input type="password" id="id_password" name="password" class="form-control" required>
             </div>
-            <a href="{% url 'register' %}" class="btn-primary">Signup</a>
+            <div>
+                <button type="submit" class="btn-primary">Login</button>
+                <a href="{% url 'register' %}" class="btn-primary">Signup</a>
+            </div>
         </form>
     </div>
 </body>
