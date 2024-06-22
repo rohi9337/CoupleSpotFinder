@@ -1,14 +1,59 @@
-# views.py
-from django.contrib.auth.decorators import login_required
+<!-- templates/main.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Best Couple Places{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'places/css/styles.css' %}">
+    {% block extra_head %}
+    {% endblock %}
+    <script>
+        function toggleDropdown() {
+            document.getElementById("dropdown").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.gear-icon')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% block extra_scripts %}
+    {% endblock %}
+</body>
+</html>
+
+
+
+
+
+# vews.py 
+
+
+
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import render, redirect
-from django.http import HttpResponseNotFound
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse_lazy
-from django.views import View
 from .models import Place
 from .forms import PlaceForm
-from account.models import UserProfile  # Import UserProfile model
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse, reverse_lazy
+from django.views import View
+from django.http import HttpResponseNotFound
+
 
 class CustomLoginView(View):
     template_name = 'places/login.html'
@@ -55,7 +100,7 @@ def index(request):
     return render(request, 'places/index.html', {'places': places})
 
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def create_place(request):
     if request.method == 'POST':
         form = PlaceForm(request.POST, request.FILES)
@@ -75,8 +120,3 @@ def place_detail(request, place_id):
         return HttpResponseNotFound("Place not found.")
     return render(request, 'places/detail.html', {'place': place})
 
-
-@login_required
-def profile(request):
-    user_profile = request.user.userprofile  # Assuming UserProfile is related to User through OneToOneField
-    return render(request, 'accounts/profile.html', {'user_profile': user_profile})

@@ -6,4 +6,5 @@ from .models import Place
 class PlaceForm(forms.ModelForm):
     class Meta:
         model = Place
-        fields = ['name', 'description', 'address', 'latitude', 'longitude', 'rating', 'image']
+        fields = ['name', 'description', 'address',  'rating', 'image']
+        # 'latitude', 'longitude',

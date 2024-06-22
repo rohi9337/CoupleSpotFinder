@@ -1,0 +1,16 @@
+<nav>
+    <div class="nav-container">
+        <h1><a href="{% url 'index' %}">Best Couple Places</a></h1>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <span class="gear-icon" onclick="toggleDropdown()">⚙️</span>
+                <div id="dropdown" class="dropdown-content">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

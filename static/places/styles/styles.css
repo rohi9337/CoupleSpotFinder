@@ -1,0 +1,136 @@
+/* Adjusted style.css for Booking.com-like design */
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7; /* Slightly lighter background */
+    color: #333; /* Main text color */
+}
+
+header {
+    background-color: #003580; /* Booking.com-like deep blue */
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.header-right a:hover {
+    background-color: #0071c2; /* Slightly darker blue on hover */
+}
+
+.places-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted for better responsiveness */
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.place-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.place-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.place-image {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.place-details {
+    padding: 1.5rem;
+}
+
+.place-name {
+    color: #333;
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: bold;
+}
+
+.place-description {
+    color: #666;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+.place-address {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.place-rating {
+    color: #ff6f61; /* Booking.com-like red/orange for rating */
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.details-link {
+    color: #0071c2; /* Blue for links */
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 1rem;
+    transition: color 0.3s ease;
+}
+
+.details-link:hover {
+    color: #005bb5; /* Darker blue on hover */
+}
+
+.create-place-link {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.create-place-link a {
+    background-color: #0071c2;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.create-place-link a:hover {
+    background-color: #005bb5; /* Darker blue on hover */
+}
+
+/* Specific inline styles for individual pages should be added as needed */

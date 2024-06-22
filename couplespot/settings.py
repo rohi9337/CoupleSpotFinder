@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'places',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,10 @@ import os
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# STATIC_URL = '/static/'  # URL prefix for static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # 'static' directory in the project root
+]
 
 
 MEDIA_URL = '/media/'
@@ -131,3 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/' 
+
+AUTH_USER_MODEL = 'account.UserProfile'

@@ -36,7 +36,7 @@
         .header-right a:hover {
             background-color: #e65c4d;
         }
-        .gear-icon {
+        .user-name {
             cursor: pointer;
         }
         .dropdown-content {
@@ -75,42 +75,43 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 1rem;
             overflow: hidden;
-            width: 300px;
+            width: 250px; /* Reduced width */
             transition: transform 0.2s;
         }
         .place-card:hover {
             transform: scale(1.05);
         }
         .place-image {
-            height: 200px;
+            height: 150px; /* Reduced height */
             object-fit: cover;
             width: 100%;
         }
         .place-details {
-            padding: 1rem;
+            padding: 0.5rem; /* Reduced padding */
         }
         .place-name {
             color: #333;
-            font-size: 1.5rem;
+            font-size: 1.2rem; /* Slightly reduced font size */
             margin: 0;
         }
         .place-description {
             color: #666;
-            font-size: 1rem;
+            font-size: 0.9rem; /* Slightly reduced font size */
             margin: 0.5rem 0;
         }
         .place-address {
             color: #999;
-            font-size: 0.9rem;
+            font-size: 0.8rem; /* Slightly reduced font size */
             margin: 0.5rem 0;
         }
         .place-rating {
             color: #ff6f61;
-            font-size: 1rem;
+            font-size: 0.9rem; /* Slightly reduced font size */
         }
         .details-link {
             color: #ff6f61;
             text-decoration: none;
+            font-size: 0.9rem; /* Slightly reduced font size */
         }
         .create-place-link {
             text-align: center;
@@ -133,7 +134,7 @@
             document.getElementById("dropdown").classList.toggle("show");
         }
         window.onclick = function(event) {
-            if (!event.target.matches('.gear-icon')) {
+            if (!event.target.matches('.user-name')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
                 for (var i = 0; i < dropdowns.length; i++) {
                     var openDropdown = dropdowns[i];
@@ -150,7 +151,7 @@
         <h1>Best Couple Places in Our City</h1>
         <div class="header-right">
             {% if user.is_authenticated %}
-                <span class="gear-icon" onclick="toggleDropdown()">⚙️</span>
+                <span class="user-name" onclick="toggleDropdown()">{{ user.username }}</span>
                 <div id="dropdown" class="dropdown-content">
                     <a href="{% url 'logout' %}">Logout</a>
                 </div>
@@ -163,16 +164,13 @@
     <div class="places-container">
         {% for place in places %}
         <div class="place-card">
-            {% if place.image %}
-                <a href="{% url 'place_detail' place.id %}">
+            <a href="{% url 'place_detail' place.id %}">
+                {% if place.image %}
                     <img src="{{ place.image.url }}" alt="{{ place.name }}" class="place-image">
-                </a>
-            {% else %}
-                <a href="{% url 'place_detail' place.id %}">
+                {% else %}
                     <img src="https://via.placeholder.com/300x200" alt="No Image" class="place-image">
-                </a>
-            {% endif %}
-
+                {% endif %}
+            </a>
             <div class="place-details">
                 <h2 class="place-name"><a href="{% url 'place_detail' place.id %}" class="details-link">{{ place.name }}</a></h2>
                 <p class="place-description">{{ place.description|truncatewords:20 }}</p>

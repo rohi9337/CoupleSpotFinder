@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ place.name }}</title>
+    <title>Best Couple Places</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f7f7f7;
-            display: flex;
-            flex-direction: column;
         }
         header {
-            background-color: #ff6f61;
+            background-color: #003580;
             color: white;
             padding: 1rem;
-            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
             top: 0;
+            width: 100%;
             z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .header-right {
             display: flex;
@@ -40,7 +39,7 @@
             transition: background-color 0.3s ease;
         }
         .header-right a:hover {
-            background-color: #e65c4d;
+            background-color: #0049a5;
         }
         .gear-icon {
             cursor: pointer;
@@ -65,70 +64,80 @@
         .show {
             display: block;
         }
-        .container {
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .places-container {
             display: flex;
-            margin-top: 6rem; /* Adjust for fixed header */
-            width: 100%;
-            padding: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 4rem 1rem 1rem;
+            margin-top: 4rem;
         }
-        .sidebar {
-            width: 20%;
-            background-color: white;
-            border-right: 1px solid #ddd;
-            padding: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-        }
-        .main-content {
-            width: 80%;
-            padding: 1rem;
-        }
-        .place-detail-container {
-            display: flex;
+        .place-card {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+            margin: 1rem;
             overflow: hidden;
+            width: 280px; /* Decreased width */
+            max-width: calc(100% - 2rem); /* Responsive max width */
+            transition: transform 0.2s;
+        }
+        .place-card:hover {
+            transform: scale(1.03); /* Slightly smaller scale on hover */
         }
         .place-image {
-            width: 40%;
-            max-height: 300px;
+            height: 180px; /* Decreased height */
             object-fit: cover;
+            width: 100%;
         }
         .place-details {
             padding: 1rem;
-            width: 60%;
         }
         .place-name {
-            font-size: 1.5rem;
             color: #333;
+            font-size: 1.2rem; /* Decreased font size */
             margin: 0;
         }
         .place-description {
-            font-size: 1rem;
             color: #666;
-            margin-top: 0.5rem;
+            font-size: 0.9rem; /* Decreased font size */
+            margin: 0.5rem 0;
         }
         .place-address {
-            font-size: 0.9rem;
             color: #999;
-            margin-top: 0.5rem;
+            font-size: 0.8rem; /* Decreased font size */
+            margin: 0.5rem 0;
         }
         .place-rating {
-            font-size: 1rem;
             color: #ff6f61;
-            margin-top: 0.5rem;
+            font-size: 0.9rem; /* Decreased font size */
+            font-weight: bold;
         }
-        .back-link {
-            color: #ff6f61;
+        .details-link {
+            color: #003580;
             text-decoration: none;
-            font-size: 1rem;
-            margin-top: 1rem;
-            display: inline-block;
+            font-weight: bold;
         }
-        .back-link:hover {
+        .details-link:hover {
             text-decoration: underline;
+        }
+        .create-place-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .create-place-link a {
+            background-color: #003580;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .create-place-link a:hover {
+            background-color: #0049a5;
         }
     </style>
     <script>
@@ -150,7 +159,7 @@
 </head>
 <body>
     <header>
-        <h1>{{ place.name }}</h1>
+        <h1>Best Couple Places in Our City</h1>
         <div class="header-right">
             {% if user.is_authenticated %}
                 <span class="gear-icon" onclick="toggleDropdown()">⚙️</span>
@@ -163,29 +172,31 @@
             {% endif %}
         </div>
     </header>
-    <div class="container">
-        <aside class="sidebar">
-            <!-- Categories or any other sidebar content goes here -->
-            <h2>Categories</h2>
-            <ul>
-                <li><a href="#">Category 1</a></li>
-                <li><a href="#">Category 2</a></li>
-                <li><a href="#">Category 3</a></li>
-                <!-- Add more categories as needed -->
-            </ul>
-        </aside>
-        <div class="main-content">
-            <div class="place-detail-container">
-                <img src="{{ place.image.url }}" alt="{{ place.name }}" class="place-image">
-                <div class="place-details">
-                    <h1 class="place-name">{{ place.name }}</h1>
-                    <p class="place-description">{{ place.description }}</p>
-                    <p class="place-address">{{ place.address }}</p>
-                    <p class="place-rating">Rating: {{ place.rating }}/5</p>
-                    <a href="{% url 'index' %}" class="back-link">&larr; Back to All Places</a>
-                </div>
+    <div class="places-container">
+        {% for place in places %}
+        <div class="place-card">
+            {% if place.image %}
+                <a href="{% url 'place_detail' place.id %}">
+                    <img src="{{ place.image.url }}" alt="{{ place.name }}" class="place-image">
+                </a>
+            {% else %}
+                <a href="{% url 'place_detail' place.id %}">
+                    <img src="https://via.placeholder.com/300x200" alt="No Image" class="place-image">
+                </a>
+            {% endif %}
+
+            <div class="place-details">
+                <h2 class="place-name"><a href="{% url 'place_detail' place.id %}" class="details-link">{{ place.name }}</a></h2>
+                <p class="place-description">{{ place.description|truncatewords:20 }}</p>
+                <p class="place-address">{{ place.address }}</p>
+                <p class="place-rating">Rating: {{ place.rating }}/5</p>
+                <a href="{% url 'place_detail' place.id %}" class="details-link">View Details</a>
             </div>
         </div>
+        {% endfor %}
+    </div>
+    <div class="create-place-link">
+        <a href="{% url 'create_place' %}">Create a New Place</a>
     </div>
 </body>
 </html>
